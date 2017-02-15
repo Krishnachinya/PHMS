@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Personal Health Monitoring System</string>
+        <string name="action_settings">Settings</string>
+        <string name="user_name">User Name</string>
+        <string name="hint_password">Password</string>
+        <string name="btn_login">Login</string>
+        <string name="err_msg_name">Enter your Email Id</string>
+        <string name="err_msg_email">Enter valid name/email address</string>
+        <string name="err_msg_password">Password Cannot Be Empty</string>
+        <string name="firstname">First Name</string>
+    <string name="lastname">Last Name</string>
+    <string name="weight">Weight in lbs</string>
+    <string name="height">Height in Inches</string>
+    <string name="phone">Cell# (000)-000-00000</string>
+    <string name="repass">Retype Password</string>
+    <string name="singup">Sign Up</string>
+    <string name="dob">Data of Birth</string>
+    <string name="err_regpass">Password Must Contain Special Character/Cannot be Empty</string>
+</resources>
