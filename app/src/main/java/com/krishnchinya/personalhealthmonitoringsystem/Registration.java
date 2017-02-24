@@ -14,6 +14,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RadioButton;
 
 import java.util.Locale;
 
@@ -26,8 +27,10 @@ public class Registration extends Activity{
     EditText dob,etFirstName,etLastName,etWeight,etHeight,etPhone,etEmail,etPassword,etRePass;
     DatePickerDialog datePickerDialog;
     SimpleDateFormat dateFormat;
+    RadioButton btnMale ,btnFemale;
+
     Button signup;
-    myTextWatcher watcher1,watcher2,watcher3,watcher4,watcher5,watcher6,watcher7,watcher8;
+    myTextWatcher watcher1,watcher2,watcher3,watcher4,watcher5,watcher6,watcher7,watcher8,watcher9;
     TextInputLayout input_etFirstName,input_etLastName,input_etWeight,
             input_etHeight,input_etPhone,input_etEmail,input_etpassword,input_etrepass;
 
@@ -74,6 +77,8 @@ public class Registration extends Activity{
         etEmail = (EditText) findViewById(R.id.etEmail);
         etPassword = (EditText) findViewById(R.id.etPassword);
         etRePass = (EditText) findViewById(R.id.etRePass);
+        btnMale = (RadioButton)findViewById(R.id.btnMale);
+        btnFemale = (RadioButton)findViewById(R.id.btnFeale);
 
 
         input_etFirstName = (TextInputLayout) findViewById(R.id.input_etFirstName);
@@ -82,7 +87,7 @@ public class Registration extends Activity{
         input_etHeight= (TextInputLayout) findViewById(R.id.input_etHeight);
         input_etPhone= (TextInputLayout) findViewById(R.id.input_etPhone);
         input_etEmail= (TextInputLayout) findViewById(R.id.input_etEmail);
-        input_etpassword= (TextInputLayout) findViewById(R.id.input_password);
+        input_etpassword= (TextInputLayout) findViewById(R.id.input_etpassword);
         input_etrepass= (TextInputLayout) findViewById(R.id.input_etrepass);
 
         watcher1 = new myTextWatcher(etFirstName,input_etFirstName,Registration.this);
@@ -92,7 +97,9 @@ public class Registration extends Activity{
         watcher5 = new myTextWatcher(etHeight,input_etHeight,Registration.this);
         watcher6 = new myTextWatcher(etPhone,input_etPhone,Registration.this);
         watcher7 = new myTextWatcher(etPassword,input_etpassword,Registration.this);
-        watcher8 = new myTextWatcher(etRePass,input_etrepass,Registration.this);
+        watcher8 = new myTextWatcher(etRePass,etPassword,input_etrepass,Registration.this);
+       // watcher9 = new myTextWatcher(btnMale,btnFemale,Registration.this);
+
 
         etFirstName.addTextChangedListener(watcher1);
         etLastName.addTextChangedListener(watcher2);
@@ -112,9 +119,17 @@ public class Registration extends Activity{
                 if (!watcher3.validateUserName()) {
                     return;
                 }
-                if(!watcher4.validateNumber() && !watcher5.validateNumber() && !watcher6.validatePhone()){
+                if(!watcher4.validateWight() && !watcher5.validateHeight() && !watcher6.validatePhone()){
                     return;
                 }
+                if (!watcher8.validateregrepass() && !watcher8.validateregpassword() ) {
+                    return;
+                }
+//                if(!watcher9.validateGender())
+//                {
+//                    return;
+//                }
+
 
                 DB_Setter_Getter dbSetterGetter = new DB_Setter_Getter(etFirstName.getText().toString(),
                         etLastName.getText().toString(),dob.getText().toString(),"Male",etEmail.getText().toString(),
@@ -127,12 +142,13 @@ public class Registration extends Activity{
 
                     Intent intent = new Intent(Registration.this, Login_Activity.class);
                     startActivity(intent);
-                }
+                }else {
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(Registration.this);
-                builder.setTitle("Error");
-                builder.setMessage("Duplicate Mail Id");
-                builder.show();
+                    AlertDialog.Builder builder = new AlertDialog.Builder(Registration.this);
+                    builder.setTitle("Error");
+                    builder.setMessage("Duplicate Mail Id");
+                    builder.show();
+                }
             }
         });
     }

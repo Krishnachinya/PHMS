@@ -95,7 +95,7 @@ public class DB_Handler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.query(TABLE_LOGIN,new String[]{"mailId","password"},"mailId = ?",
-                new String[]{dbSetterGetter.getMailID()},null,null,null);
+                new String[]{dbSetterGetter.getMailID().toLowerCase()},null,null,null);
 
         if(cursor!=null)
         {

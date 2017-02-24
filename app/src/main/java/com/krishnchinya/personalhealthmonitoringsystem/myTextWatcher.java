@@ -9,6 +9,8 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.Toast;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -32,6 +34,12 @@ public class myTextWatcher implements TextWatcher {
         this.view = view;//this the text filed which needs to be checked;
         this.view1 = view1;//for password recheck
         this.textInputLayout = textInputLayout;
+        this.context = context;
+    }
+
+    public myTextWatcher(View view, View view1, Context context) {
+        this.view = view;//this the text filed which needs to be checked;
+        this.view1 = view1;//for password recheck
         this.context = context;
     }
 
@@ -63,9 +71,10 @@ public class myTextWatcher implements TextWatcher {
                 validateUserName();
                 break;
             case R.id.etHeight:
-            case R.id.etWeight:s
-
-                validateNumber();
+                validateHeight();
+                break;
+            case R.id.etWeight:
+                validateWight();
                 break;
             case R.id.etPhone:
                 validatePhone();
@@ -76,18 +85,36 @@ public class myTextWatcher implements TextWatcher {
             case R.id.etRePass:
                 validateregrepass();
                 break;
+            case R.id.etgender:
+                validateGender();
+                break;
         }
+    }
+
+    public boolean validateGender()
+    {
+
+        if(((RadioButton)view).isChecked() || ((RadioButton)view1).isChecked())
+        {
+            Toast t = Toast.makeText(context,"Please select Gender",Toast.LENGTH_LONG);
+            t.show();
+            return false;
+        }else
+        {
+            return true;
+        }
+
     }
 
     public boolean validateregpassword()
     {
         String password = ((EditText)view).getText().toString().trim();
-        Pattern pattern_password = Pattern.compile("((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})");
+        Pattern pattern_password = Pattern.compile("^(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{8,}$");
         Matcher matcher_password = pattern_password.matcher(password);
 
-        if(password.isEmpty() || matcher_password.find())
+        if(password.isEmpty() || !matcher_password.find() || password.length() < 8)
         {
-            textInputLayout.setError(context.getString(R.string.err_regpass));
+            textInputLayout.setError("Special Character Required/Length cannot be less than 8");
             ((EditText)view).requestFocus();
             return false;
         }else{
@@ -99,8 +126,8 @@ public class myTextWatcher implements TextWatcher {
 
     public boolean validateregrepass()
     {
-        String repassword = ((EditText)view1).getText().toString().trim();
-        String password = ((EditText)view).getText().toString().trim();
+        String repassword = ((EditText)view).getText().toString().trim();
+        String password = ((EditText)view1).getText().toString().trim();
 
         if(!password.equals(repassword))
         {
@@ -117,9 +144,9 @@ public class myTextWatcher implements TextWatcher {
 
     public boolean validatePhone(){
         String number = ((EditText)view).getText().toString().trim();
-        if(number.isEmpty() || !TextUtils.isDigitsOnly(number))
+        if(number.isEmpty() || !TextUtils.isDigitsOnly(number) || number.length() > 10 || number.length() < 10)
         {
-            textInputLayout.setError("Cannot be Empty/or have characters");
+            textInputLayout.setError("Enter Valid Phone Number");
             ((EditText)view).requestFocus();
             return false;
         }else{
@@ -128,12 +155,12 @@ public class myTextWatcher implements TextWatcher {
         return true;
     }
 
-    public boolean validateNumber()
+    public boolean validateWight()
     {
         String number = ((EditText)view).getText().toString().trim();
-        if(number.isEmpty() || !TextUtils.isDigitsOnly(number))
+        if(number.isEmpty() || !TextUtils.isDigitsOnly(number) || Integer.valueOf(number) > 700 || Integer.valueOf(number) < 5 )
         {
-            textInputLayout.setError("Cannot be Empty/or have characters");
+            textInputLayout.setError("Invalid Input");
             ((EditText)view).requestFocus();
             return false;
         }else {
@@ -142,10 +169,27 @@ public class myTextWatcher implements TextWatcher {
         return true;
     }
 
-    public boolean validateName(){
-        String name = ((EditText)view).getText().toString().trim();
 
-        if(name.isEmpty())
+    public boolean validateHeight()
+    {
+        String number = ((EditText)view).getText().toString().trim();
+        if(number.isEmpty() || !TextUtils.isDigitsOnly(number) || Integer.valueOf(number) > 9 || Integer.valueOf(number) < 1)
+        {
+            textInputLayout.setError("Invalid Input");
+            ((EditText)view).requestFocus();
+            return false;
+        }else {
+            textInputLayout.setErrorEnabled(false);
+        }
+        return true;
+    }
+    public boolean validateName(){
+
+        String name = ((EditText)view).getText().toString().trim();
+        Pattern pattern = Pattern.compile("^[_A-Za-z-\\+]{1,}$");
+        Matcher matcher = pattern.matcher(name);
+
+        if(name.isEmpty() || !matcher.find())
         {
             textInputLayout.setError("Cannot be Empty/Contain digits");
             requestFocus(((EditText)view),context);
@@ -175,8 +219,6 @@ public class myTextWatcher implements TextWatcher {
 
     public boolean validatePassword(){
         String passwrd = ((EditText)view).getText().toString().trim();
-
-
 
         if (passwrd.isEmpty())
         {
