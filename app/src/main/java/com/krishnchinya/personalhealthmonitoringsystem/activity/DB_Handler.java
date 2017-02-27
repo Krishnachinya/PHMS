@@ -1,4 +1,4 @@
-package com.krishnchinya.personalhealthmonitoringsystem;
+package com.krishnchinya.personalhealthmonitoringsystem.activity;
 
 import android.content.ContentValues;
 import android.content.Context;

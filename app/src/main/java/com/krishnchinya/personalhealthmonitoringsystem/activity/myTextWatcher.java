@@ -1,4 +1,4 @@
-package com.krishnchinya.personalhealthmonitoringsystem;
+package com.krishnchinya.personalhealthmonitoringsystem.activity;
 
 import android.app.Activity;
 import android.content.Context;
@@ -11,6 +11,8 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
+
+import com.krishnchinya.personalhealthmonitoringsystem.R;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

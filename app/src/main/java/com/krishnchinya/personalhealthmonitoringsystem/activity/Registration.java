@@ -1,4 +1,4 @@
-package com.krishnchinya.personalhealthmonitoringsystem;
+package com.krishnchinya.personalhealthmonitoringsystem.activity;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
@@ -15,6 +15,8 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
+
+import com.krishnchinya.personalhealthmonitoringsystem.R;
 
 import java.util.Locale;
 

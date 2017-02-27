@@ -1,4 +1,4 @@
-package com.krishnchinya.personalhealthmonitoringsystem;
+package com.krishnchinya.personalhealthmonitoringsystem.activity;
 
 /**
  * Created by KrishnChinya on 2/12/17.

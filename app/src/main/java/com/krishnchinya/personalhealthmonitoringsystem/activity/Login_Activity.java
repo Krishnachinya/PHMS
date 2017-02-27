@@ -1,4 +1,4 @@
-package com.krishnchinya.personalhealthmonitoringsystem;
+package com.krishnchinya.personalhealthmonitoringsystem.activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -8,6 +8,8 @@ import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.krishnchinya.personalhealthmonitoringsystem.R;
 
 /**
  * Created by KrishnChinya on 2/11/17.
@@ -59,9 +61,8 @@ public class Login_Activity extends Activity {
 
                 if(details[0].equals(dbSetterGetter.getMailID()) && details[1].equals(dbSetterGetter.getPassword()))
                 {
-                    builder.setTitle("Login Successful");
-                    builder.setMessage("Login successful");
-                    builder.show();
+                    Intent intent = new Intent(Login_Activity.this, MainMenu.class);
+                    startActivity(intent);
                 }else
                 {
                     builder.setTitle("");
