@@ -37,6 +37,7 @@ public class Registration extends Activity{
             input_etHeight,input_etPhone,input_etEmail,input_etpassword,input_etrepass;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -115,16 +116,16 @@ public class Registration extends Activity{
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!watcher1.validateName() && !watcher2.validateName()) {
+                if ((!watcher1.validateName()) | (!watcher2.validateName())) {
                     return;
                 }
                 if (!watcher3.validateUserName()) {
                     return;
                 }
-                if(!watcher4.validateWight() && !watcher5.validateHeight() && !watcher6.validatePhone()){
+                if((!watcher4.validateWight()) | (!watcher5.validateHeight()) | (!watcher6.validatePhone())){
                     return;
                 }
-                if (!watcher8.validateregrepass() && !watcher8.validateregpassword() ) {
+                if((!watcher8.validateregrepass()) | (!watcher8.validateregpassword())) {
                     return;
                 }
 //                if(!watcher9.validateGender())

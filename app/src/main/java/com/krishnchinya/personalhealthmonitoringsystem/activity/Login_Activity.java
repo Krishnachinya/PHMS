@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.krishnchinya.personalhealthmonitoringsystem.R;
+import com.krishnchinya.personalhealthmonitoringsystem.other.GlobalVars;
 
 /**
  * Created by KrishnChinya on 2/11/17.
@@ -20,6 +21,7 @@ public class Login_Activity extends Activity {
     private Button loginButton, newUser;
     private EditText usernameEditText, passwordEditText;
     myTextWatcher watcher1, watcher2;
+    GlobalVars globalVars;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +63,11 @@ public class Login_Activity extends Activity {
 
                 if(details[0].equals(dbSetterGetter.getMailID()) && details[1].equals(dbSetterGetter.getPassword()))
                 {
+                    //set the global variables for further use.
+                    globalVars = (GlobalVars) getApplicationContext();
+                    globalVars.setUsername(details[2].toString());
+                    globalVars.setMailid(details[0].toString());
+
                     Intent intent = new Intent(Login_Activity.this, MainMenu.class);
                     startActivity(intent);
                 }else

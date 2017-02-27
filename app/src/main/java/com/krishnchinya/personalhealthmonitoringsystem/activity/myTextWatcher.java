@@ -67,18 +67,23 @@ public class myTextWatcher implements TextWatcher {
                 break;
             case R.id.etFirstName:
             case R.id.etLastName:
+            case R.id.etUpdateFirstName:
+            case R.id.etUpdateLastName:
                 validateName();
                 break;
             case R.id.etEmail:
                 validateUserName();
                 break;
             case R.id.etHeight:
+            case R.id.etUpdateHeight:
                 validateHeight();
                 break;
             case R.id.etWeight:
+            case R.id.etUpdateWeight:
                 validateWight();
                 break;
             case R.id.etPhone:
+            case R.id.etUpdatePhone:
                 validatePhone();
                 break;
             case R.id.etPassword:
@@ -88,6 +93,7 @@ public class myTextWatcher implements TextWatcher {
                 validateregrepass();
                 break;
             case R.id.etgender:
+            case R.id.etUpdategender:
                 validateGender();
                 break;
         }
@@ -121,8 +127,8 @@ public class myTextWatcher implements TextWatcher {
             return false;
         }else{
             textInputLayout.setErrorEnabled(false);
+            return true;
         }
-        return true;
 
     }
 
@@ -138,8 +144,8 @@ public class myTextWatcher implements TextWatcher {
             return false;
         }else {
             textInputLayout.setErrorEnabled(false);
+            return true;
         }
-        return true;
 
     }
 
@@ -153,8 +159,8 @@ public class myTextWatcher implements TextWatcher {
             return false;
         }else{
             textInputLayout.setErrorEnabled(false);
+            return true;
         }
-        return true;
     }
 
     public boolean validateWight()
@@ -167,8 +173,8 @@ public class myTextWatcher implements TextWatcher {
             return false;
         }else {
             textInputLayout.setErrorEnabled(false);
+            return true;
         }
-        return true;
     }
 
 
@@ -182,9 +188,10 @@ public class myTextWatcher implements TextWatcher {
             return false;
         }else {
             textInputLayout.setErrorEnabled(false);
+            return true;
         }
-        return true;
     }
+
     public boolean validateName(){
 
         String name = ((EditText)view).getText().toString().trim();
@@ -200,8 +207,8 @@ public class myTextWatcher implements TextWatcher {
         else
         {
             textInputLayout.setErrorEnabled(false);
+            return true;
         }
-        return true;
     }
 
     public boolean validateUserName(){
@@ -215,8 +222,8 @@ public class myTextWatcher implements TextWatcher {
         }else
         {
             textInputLayout.setErrorEnabled(false);
+            return true;
         }
-        return true;
     }
 
     public boolean validatePassword(){
@@ -230,8 +237,8 @@ public class myTextWatcher implements TextWatcher {
         }else
         {
             textInputLayout.setErrorEnabled(false);
+            return true;
         }
-        return true;
 
     }
 

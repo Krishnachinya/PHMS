@@ -22,8 +22,21 @@ public class DB_Setter_Getter {
     }
 
     public DB_Setter_Getter(String fName, String lName, String dob,
-                            String gender, String mailID, String weight,
-                            String height, String phone ,String password) {
+                            String gender, String weight,
+                            String height, String phone,String mailID ) {
+        this.fName = fName;
+        this.lName = lName;
+        this.dob = dob;
+        this.gender = gender;
+        this.weight = weight;
+        this.height = height;
+        this.phone = phone;
+        this.mailID = mailID;
+    }
+
+    public DB_Setter_Getter(String fName, String lName, String dob,
+                                 String gender, String mailID, String weight,
+                                 String height, String phone ,String password) {
         this.fName = fName;
         this.lName = lName;
         this.dob = dob;
@@ -34,6 +47,8 @@ public class DB_Setter_Getter {
         this.phone = phone;
         this.password = password;
     }
+
+
 
     public String getPhone() {
         return phone;

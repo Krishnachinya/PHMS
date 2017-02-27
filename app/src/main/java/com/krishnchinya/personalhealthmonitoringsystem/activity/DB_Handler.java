@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.krishnchinya.personalhealthmonitoringsystem.other.GlobalVars;
+
 /**
  * Created by KrishnChinya on 2/12/17.
  */
@@ -53,11 +55,27 @@ public class DB_Handler extends SQLiteOpenHelper {
         values.put("lname",dbSetterGetter.getlName());
         values.put("dob",dbSetterGetter.getdob());
         values.put("gender",dbSetterGetter.getGender());
-        values.put("mailId",dbSetterGetter.getMailID());
+        values.put("mailId",dbSetterGetter.getMailID().toLowerCase());
         values.put("weight",dbSetterGetter.getWeight());
         values.put("height",dbSetterGetter.getHeight());
 
         db.insert(TABLE_REGISTRATION,null,values);
+        db.close();
+
+    }
+
+    public void editegistration(DB_Setter_Getter dbSetterGetter){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put("fname",dbSetterGetter.getfName());
+        values.put("lname",dbSetterGetter.getlName());
+        values.put("dob",dbSetterGetter.getdob());
+        values.put("gender",dbSetterGetter.getGender());
+        values.put("weight",dbSetterGetter.getWeight());
+        values.put("height",dbSetterGetter.getHeight());
+
+        db.update(TABLE_REGISTRATION,values,"mailId='"+dbSetterGetter.getMailID().toLowerCase()+"'",null);
         db.close();
 
     }
@@ -67,7 +85,7 @@ public class DB_Handler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put("mailId",dbSetterGetter.getMailID());
+        values.put("mailId",dbSetterGetter.getMailID().toLowerCase());
         values.put("password",dbSetterGetter.getPassword());
 
         db.insert(TABLE_LOGIN,null,values);
@@ -91,7 +109,7 @@ public class DB_Handler extends SQLiteOpenHelper {
 
     public String[] getcredentials(DB_Setter_Getter dbSetterGetter)
     {
-        String[] details = new String[2];
+        String[] details = new String[3];
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.query(TABLE_LOGIN,new String[]{"mailId","password"},"mailId = ?",
@@ -100,12 +118,39 @@ public class DB_Handler extends SQLiteOpenHelper {
         if(cursor!=null)
         {
             cursor.moveToFirst();
-            details[1] = cursor.getString(1);
             details[0] = cursor.getString(0);
-            return details;
+            details[1] = cursor.getString(1);
+        }
+
+        cursor = db.query(TABLE_REGISTRATION,new String[]{"fname"},"mailId = ?",
+                new String[]{dbSetterGetter.getMailID().toLowerCase()},null,null,null);
+
+        if(cursor!=null)
+        {
+            cursor.moveToFirst();
+            details[2] = cursor.getString(0);
+        }
+        return details;
+    }
+
+    public String[] getRegistrationDetails(DB_Setter_Getter dbSetterGetter)
+    {
+        String[] details = new String[6];
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query(TABLE_REGISTRATION,new String[]{"fname","lname","dob","gender","weight","height"},"mailId = ?",
+                new String[]{dbSetterGetter.getMailID().toLowerCase()},null,null,null);
+
+        if(cursor!=null)
+        {
+            cursor.moveToFirst();
+            for(int i=0;i<details.length;i++) {
+                details[i] = cursor.getString(i);
+            }
         }
 
         return details;
+
     }
 
 }

@@ -7,7 +7,7 @@
     android:background="@android:color/background_light">
 
 <LinearLayout
-    android:id="@+id/activity_user_registration"
+    android:id="@+id/activity_Update_registration"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:scrollbars="vertical"
@@ -21,12 +21,12 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="71dp" android:src="@drawable/logo"
-        android:id="@+id/imageView" />
+        android:id="@+id/UpdateimageView" />
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/input_etFirstName"
+        android:id="@+id/input_etUpdateFirstName"
         >
 
     <EditText
@@ -34,14 +34,14 @@
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:hint="@string/firstname"
-        android:id="@+id/etFirstName"
+        android:id="@+id/etUpdateFirstName"
         />
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/input_etLastName"
+        android:id="@+id/input_etUpdateLastName"
         >
 
     <EditText
@@ -50,7 +50,7 @@
         android:inputType="textPersonName"
         android:hint="@string/lastname"
         android:ems="10"
-        android:id="@+id/etLastName"
+        android:id="@+id/etUpdateLastName"
         android:layout_marginTop="5dp"
         />
 </android.support.design.widget.TextInputLayout>
@@ -62,20 +62,20 @@
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:text="Gender"
-            android:id="@+id/etgender" android:enabled="false"/>
+            android:id="@+id/etUpdategender" android:enabled="false"/>
 
     <RadioGroup
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="5dp" android:layout_toRightOf="@id/etgender">
+        android:layout_marginTop="5dp" android:layout_toRightOf="@id/etUpdategender">
 
         <RadioButton
             style="@style/Base.Widget.AppCompat.CompoundButton.RadioButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Male"
-            android:id="@+id/btnMale"
+            android:id="@+id/btnUpdateMale"
             android:textColor="@color/colorPrimary"
             />
 
@@ -84,7 +84,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Female"
-            android:id="@+id/btnFeale"
+            android:id="@+id/btnUpdateFeale"
             android:textColor="@color/colorPrimary"
             />
 
@@ -95,12 +95,12 @@
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/input_etdob">
+        android:id="@+id/input_etUpdatedob">
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/etdob"
+            android:id="@+id/etUpdatedob"
             android:hint="@string/dob"
             android:layout_weight="0.25" />
 
@@ -117,12 +117,12 @@
         <android.support.design.widget.TextInputLayout
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:id="@+id/input_etWeight">
+            android:id="@+id/input_etUpdateWeight">
 
             <EditText
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:id="@+id/etWeight"
+                android:id="@+id/etUpdateWeight"
                 android:hint="@string/weight"
                 android:layout_weight="0.25" />
 
@@ -131,12 +131,12 @@
         <android.support.design.widget.TextInputLayout
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:id="@+id/input_etHeight">
+            android:id="@+id/input_etUpdateHeight">
 
             <EditText
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:id="@+id/etHeight"
+                android:id="@+id/etUpdateHeight"
                 android:hint="@string/height"
                 android:layout_weight="0.25"
                 />
@@ -148,61 +148,23 @@
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" android:id="@+id/input_etPhone">
+        android:layout_height="wrap_content" android:id="@+id/input_etUpdatePhone">
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/phone"
-        android:id="@+id/etPhone"
+        android:id="@+id/etUpdatePhone"
         android:inputType="phone"
         />
 
     </android.support.design.widget.TextInputLayout>
 
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" android:id="@+id/input_etEmail">
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/err_msg_name"
-            android:id="@+id/etEmail"
-            android:layout_marginTop="5dp"
-            />
-    </android.support.design.widget.TextInputLayout>
-
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" android:id="@+id/input_etpassword">
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/hint_password"
-            android:id="@+id/etPassword"
-            android:inputType="textPassword"
-            />
-
-    </android.support.design.widget.TextInputLayout>
-
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" android:id="@+id/input_etrepass">
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/repass"
-            android:id="@+id/etRePass"
-            android:inputType="textPassword"
-            />
-    </android.support.design.widget.TextInputLayout>
-
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/singup"
-        android:id="@+id/btnSignup"
+        android:text="Update Profile"
+        android:id="@+id/btnUpdatepro"
         style="@style/Widget.AppCompat.Button.Colored"
         />
 
