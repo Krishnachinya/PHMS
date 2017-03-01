@@ -69,7 +69,7 @@ public class Login_Activity extends Activity {
                     globalVars.setMailid(details[0].toString());
 
                     Intent intent = new Intent(Login_Activity.this, MainMenu.class);
-                    startActivity(intent);
+                    startActivityForResult(intent,1);
                 }else
                 {
                     builder.setTitle("");

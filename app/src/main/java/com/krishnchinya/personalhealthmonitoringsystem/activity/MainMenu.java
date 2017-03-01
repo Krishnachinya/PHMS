@@ -40,6 +40,7 @@ public class MainMenu extends AppCompatActivity {
     Handler handler;
     View view;
     GlobalVars globalVars;
+    Intent intent;
 
 
     String[] activitytitle;
@@ -134,13 +135,14 @@ public class MainMenu extends AppCompatActivity {
                         break;
                     case R.id.nav_updateprofile:
                         // launch new intent instead of loading fragment
-                        startActivity(new Intent(MainMenu.this, UpdateRegistration.class));
+                        intent  = new Intent(MainMenu.this,UpdateRegistration.class);
+                        startActivityForResult(intent,1);
                         drawerLayout.closeDrawers();
                         return true;
                     case R.id.nav_logout:
-                        startActivity(new Intent(MainMenu.this, Login_Activity.class));
+                        intent = new Intent();
+                        setResult(Activity.RESULT_CANCELED,intent);
                         finish();
-                        //drawerLayout.closeDrawer();
                         return true;
                     //insert cases for others
                     default:navItemIndex = 0;

@@ -149,8 +149,9 @@ public class UpdateRegistration extends Activity{
 
                     db_handler.editegistration(dbSetterGetter);
 
-                    Intent intent = new Intent(UpdateRegistration.this, MainMenu.class);
-                    startActivity(intent);
+                    Intent intent = new Intent();
+                    setResult(Activity.RESULT_CANCELED,intent);
+                    finish();
             }
         });
     }
