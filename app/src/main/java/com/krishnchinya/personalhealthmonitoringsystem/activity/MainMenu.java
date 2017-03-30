@@ -129,8 +129,12 @@ public class MainMenu extends AppCompatActivity {
                         navItemIndex = 2;
                         CURRENT_TAG = "medication";
                         break;
+//                    case R.id.nav_diet:
+//                        navItemIndex = 3;
+//                        CURRENT_TAG = "medication";
+//                        break;
                     case R.id.nav_notes:
-                        navItemIndex = 3;
+                        navItemIndex = 4;
                         CURRENT_TAG = "notes";
                         break;
                     case R.id.nav_updateprofile:
