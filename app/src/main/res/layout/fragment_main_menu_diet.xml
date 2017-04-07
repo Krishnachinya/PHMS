@@ -1,0 +1,45 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.krishnchinya.personalhealthmonitoringsystem.fragments.MainMenu_Diet">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+    </LinearLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/addDiet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@drawable/add" />
+
+    <!-- TODO: Update blank fragment layout -->
+    <!--<RelativeLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
+
+        <!--<ImageView-->
+            <!--android:layout_width="80dp"-->
+            <!--android:layout_height="80dp"-->
+            <!--android:background="@drawable/notes"-->
+            <!--android:id="@+id/notes"-->
+            <!--android:layout_centerInParent="true"-->
+            <!--android:alpha="0.5"-->
+            <!--/>-->
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Notes"-->
+            <!--android:layout_below="@id/notes"-->
+            <!--android:layout_centerInParent="true"-->
+            <!--android:textSize="20dp"-->
+            <!--/>-->
+    <!--</RelativeLayout>-->
+
+</FrameLayout>
