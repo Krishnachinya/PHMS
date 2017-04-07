@@ -5,8 +5,12 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.icu.text.SimpleDateFormat;
 
 import com.krishnchinya.personalhealthmonitoringsystem.other.GlobalVars;
+
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by KrishnChinya on 2/12/17.
@@ -16,12 +20,15 @@ public class DB_Handler extends SQLiteOpenHelper {
 
 
     // Database Version
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 6;
     // Database Name
     private static final String DATABASE_NAME = "PHMS";
     // Contacts table name
     private static final String TABLE_REGISTRATION = "REGISTRATION";
     private static final String TABLE_LOGIN = "LOGIN";
+    private static final String TABLE_MEDICINE = "MEDICATION";
+
+    private static final String TABLE_VITALS = "VITALS";
 
 
     public DB_Handler(Context context) {
@@ -35,8 +42,16 @@ public class DB_Handler extends SQLiteOpenHelper {
 
         String CREATE_TABLE_LOGIN = "create table "+ TABLE_LOGIN + " (mailId TEXT PRIMARY KEY, password TEXT)";
 
+        String CREATE_TABLE_MEDICATION = "create table "+ TABLE_MEDICINE + " (mailid TEXT,medicinename TEXT, doctorname Text, medicinetype Text, start_date TEXT," +
+                " end_date TEXT, woftd TEXT, remainder TEXT, time TEXT)";
+
+        String CREATE_TABLE_VITALS = "create table "+ TABLE_VITALS + " (mailid TEXT, spbloodtype TEXT , spcholesterol TEXT, spbp TEXT," +
+                " glucose TEXT, heartrate TEXT, bmi TEXT, bodytemp TEXT)";
+
         db.execSQL(CREATE_TABLE_LOGIN);
         db.execSQL(CREATE_TABLE_REGISTRATION);
+        db.execSQL(CREATE_TABLE_MEDICATION);
+        db.execSQL(CREATE_TABLE_VITALS);
     }
 
     @Override
@@ -44,6 +59,8 @@ public class DB_Handler extends SQLiteOpenHelper {
 
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_REGISTRATION);
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_LOGIN);
+        db.execSQL("DROP TABLE IF EXISTS "+TABLE_MEDICINE);
+        db.execSQL("DROP TABLE IF EXISTS "+TABLE_VITALS);
         onCreate(db);
     }
 
@@ -93,6 +110,128 @@ public class DB_Handler extends SQLiteOpenHelper {
 
     }
 
+    public void addmedication(DB_Setter_Getter dbSetterGetter)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put("mailId", dbSetterGetter.getMailId().toLowerCase());
+        values.put("medicinename", dbSetterGetter.getMedicinename());
+        values.put("doctorname",dbSetterGetter.getDoctorName());
+        values.put("medicinetype",dbSetterGetter.getMedicineType());
+        values.put("start_date", dbSetterGetter.getStart_date());
+        values.put("end_date",dbSetterGetter.getEnd_date());
+        values.put("woftd",  dbSetterGetter.getWkofd());
+        values.put("remainder", dbSetterGetter.getRemainder());
+        values.put("time", dbSetterGetter.getTime());
+
+        db.insert(TABLE_MEDICINE,null,values);
+        db.close();
+    }
+
+
+    public void addvitalSigns(DB_Setter_Getter dbSetterGetter){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put("mailid", dbSetterGetter.getMailId().toLowerCase());
+        values.put("spbloodtype",dbSetterGetter.getSpbloodtype());
+        values.put("spcholesterol",dbSetterGetter.getSpcholesterol());
+        values.put("spbp",dbSetterGetter.getSpbp());
+        //values.put("haemoglobin",dbSetterGetter.getHaemoglobin());
+        values.put("glucose",dbSetterGetter.getGlucose());
+        values.put("heartrate",dbSetterGetter.getHeartrate());
+        values.put("bmi",dbSetterGetter.getBmi());
+        values.put("bodytemp",dbSetterGetter.getBodytemp());
+
+        db.insert(TABLE_VITALS,null,values);
+        db.close();
+
+
+
+    }
+
+
+    public String[][] getmedication(String mailid, String currentdate)
+    {
+        int rowcount = getmedicationcount(mailid);
+        int noofrows = 0;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
+        Date temp;
+
+        String[][] medicationdetailsdup = new String[rowcount][6];
+        int count=0;
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query(TABLE_MEDICINE,new String[]{"medicinename","medicinetype","start_date","end_date","woftd","time"},"mailId = ? "
+//                "AND start_date=? AND end_date<=?"
+                , new String[]{mailid.toLowerCase()},null,null,null);
+
+        while(cursor.moveToNext())
+        {
+            //cursor.moveToFirst();
+            //use for loop when im not lazy.
+            medicationdetailsdup[count][0] = cursor.getString(0);
+            medicationdetailsdup[count][1] = cursor.getString(1);
+            medicationdetailsdup[count][2] = cursor.getString(2);
+            medicationdetailsdup[count][3] = cursor.getString(3);
+            medicationdetailsdup[count][4] = cursor.getString(4);
+            medicationdetailsdup[count][5] = cursor.getString(5);
+
+            count++;
+        }
+        try {
+
+
+            for(int i = 0; i < medicationdetailsdup.length;i++) {
+                if ( dateFormat.parse(currentdate).before(dateFormat.parse(medicationdetailsdup[i][2])) ||
+                        dateFormat.parse(currentdate).after(dateFormat.parse(medicationdetailsdup[i][3])) ){
+                    //do nothing
+                }
+                else {
+                    //add to new array
+                    noofrows++;
+                }
+            }
+
+            String[][] medicationdetails = new String[noofrows][6];
+
+            for(int i = 0; i < medicationdetails.length;i++) {
+                if ( dateFormat.parse(currentdate).before(dateFormat.parse(medicationdetailsdup[i][2])) &&
+                        dateFormat.parse(currentdate).after(dateFormat.parse(medicationdetailsdup[i][3])) ){
+                    //do nothing
+                }
+                else {
+                    //add to new array
+                    medicationdetails[i][0] = medicationdetailsdup[i][0];
+                    medicationdetails[i][1] = medicationdetailsdup[i][1];
+                    medicationdetails[i][2] = medicationdetailsdup[i][2];
+                    medicationdetails[i][3] = medicationdetailsdup[i][3];
+                    medicationdetails[i][4] = medicationdetailsdup[i][4];
+                    medicationdetails[i][5] = medicationdetailsdup[i][5];
+                }
+            }
+
+        return medicationdetails;
+
+        }catch (Exception ex){
+
+        }
+        return new String[0][0];
+
+    }
+
+    public int getmedicationcount(String mailid)
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query(TABLE_MEDICINE, new String[]{"mailId"},"mailId = ?",
+                new String[]{mailid},null,null,null);
+
+        return cursor.getCount();
+    }
+
+
     public boolean checkMail(DB_Setter_Getter dbSetterGetter)
     {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -140,6 +279,37 @@ public class DB_Handler extends SQLiteOpenHelper {
 
         Cursor cursor = db.query(TABLE_REGISTRATION,new String[]{"fname","lname","dob","gender","weight","height"},"mailId = ?",
                 new String[]{dbSetterGetter.getMailID().toLowerCase()},null,null,null);
+
+        if(cursor!=null)
+        {
+            cursor.moveToFirst();
+            for(int i=0;i<details.length;i++) {
+                details[i] = cursor.getString(i);
+            }
+        }
+
+        return details;
+
+    }
+
+    public void SetNewPassword(DB_Setter_Getter dbSetterGetter)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put("password",dbSetterGetter.getPassword());
+
+        db.update(TABLE_LOGIN,values,"mailId='"+dbSetterGetter.getMailID().toLowerCase()+"'",null);
+        db.close();
+    }
+
+    public String[] getVitalDetails(String mailId)
+    {
+        String[] details = new String[7];
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query(TABLE_VITALS,new String[]{"spbloodtype","spcholesterol","spbp","glucose","heartrate","bmi","bodytemp"},"mailid = ?",
+                new String[]{mailId.toLowerCase()},null,null,null);
 
         if(cursor!=null)
         {

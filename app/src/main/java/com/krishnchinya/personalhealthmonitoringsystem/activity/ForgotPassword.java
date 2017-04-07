@@ -16,6 +16,7 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.Base64;
 import com.google.api.client.util.ExponentialBackOff;
 
+import com.google.api.client.util.Strings;
 import com.google.api.services.gmail.Gmail;
 import com.google.api.services.gmail.GmailScopes;
 
@@ -35,8 +36,11 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.TextInputLayout;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -46,23 +50,29 @@ import javax.mail.internet.*;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
+import java.util.Random;
 
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
+
 
 public class ForgotPassword extends Activity
         implements EasyPermissions.PermissionCallbacks {
     GoogleAccountCredential mCredential;
     private Button sendmail;
     ProgressDialog mProgress;
-    LinearLayout linearLayout;
     Toast toast;
-    HttpTransport transport;
-    JsonFactory jsonFactory;
-
+    EditText emailText;
+    myTextWatcher watcher;
+    TextInputLayout input_etEmail;
+    DB_Setter_Getter db_setter_getter;
+    DB_Handler dbhandler;
+    boolean mailiddb;
+    String newpassword,newTempPassword="";
     Gmail mService = null;
 
     static final int REQUEST_ACCOUNT_PICKER = 1000;
@@ -84,19 +94,38 @@ public class ForgotPassword extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forgotpassword);
         sendmail = (Button) findViewById(R.id.SendMail);
+        emailText = (EditText) findViewById(R.id.etEmailforPass) ;
+        input_etEmail = (TextInputLayout)findViewById(R.id.input_etEmailforpass);
 
+        watcher = new myTextWatcher(emailText,input_etEmail,ForgotPassword.this);
 
+        emailText.addTextChangedListener(watcher);
         sendmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendmail.setEnabled(false);
-                getResultsFromApi();
 
-                AsyncTask<Void, Void, Void> send = new AsyncTask<Void, Void, Void>() {
+                sendmail.setEnabled(false);
+
+                if (!watcher.validateUserName()) {
+                    return;
+                }
+
+                db_setter_getter = new DB_Setter_Getter(emailText.getText().toString(),"");
+                dbhandler = new DB_Handler(ForgotPassword.this);
+                mailiddb = dbhandler.checkMail(db_setter_getter);
+                if(!mailiddb)
+                {
+                    newpassword = generateTempPassword();
+                    db_setter_getter.setPassword(emailText.getText().toString());
+
+                }
+
+                getResultsFromApi();
+                AsyncTask<String, Void, Void> send = new AsyncTask<String, Void, Void>() {
 
 
                     @Override
-                    protected Void doInBackground(Void... params) {
+                    protected Void doInBackground(String... params) {
                         try {
                             HttpTransport transport = AndroidHttp.newCompatibleTransport();
                             JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
@@ -105,14 +134,18 @@ public class ForgotPassword extends Activity
                                     .build();
 
                             String user = "me";
-                            MimeMessage message = createEmail("KrishnaChinya@gmail.com", "phmsteam4@gmail.com", "Test Mail", "Test Mail");
-                            sendMessage(mService, user, message);
+                            MimeMessage message = createEmail(params[0], "phmsteam4@gmail.com", "New Password",
+                                    "Hello User, \n \nYour new Password is : "+params[1]+
+                                    "\nRegards, \nPHMS Team"
+                                    );
+                            Message message1 = sendMessage(mService, user, message);
 
-                            return null;
+                           // return null;
                         } catch (Exception ex) {
                             return null;
                         }
-                    }
+                        return null;
+                    };
 
                     @Override
                     protected void onPreExecute() {
@@ -125,8 +158,10 @@ public class ForgotPassword extends Activity
                     }
 
                 };
-            send.execute();
-                sendmail.setEnabled(false);
+                send.execute(emailText.getText().toString(),newpassword);
+                dbhandler.SetNewPassword(db_setter_getter);
+                 sendmail.setEnabled(true);
+             finish();
             }
         });
 
@@ -141,6 +176,35 @@ public class ForgotPassword extends Activity
 
 
     }
+
+    public String generateTempPassword(){
+
+        //Password should have an uppercase, lowercase and a number
+        String upperCase = "ABCDEFGHIJKLMNPQRSTUVWXYZ";
+        String lowercase = "abcdefghijklmnpqrstuvwxyz";
+        String number = "0123456789";
+
+
+        int indexU;
+        int indexL;
+        int indexN;
+
+        //Assuming minimum password length is 8 characters
+        for(int i = 0; i<3; i++){
+
+            indexU = (int) (new SecureRandom().nextDouble() * upperCase.length());
+            indexL = (int) (new SecureRandom().nextDouble() * lowercase.length());
+            indexN = (int) (new SecureRandom().nextDouble() * number.length());
+
+
+            try {
+                newTempPassword += upperCase.substring(indexU, indexU + 1) + lowercase.substring(indexL, indexL + 1) + number.substring(indexN, indexN + 1);
+            }catch(Exception e){
+
+                }
+            }
+            return newTempPassword + "@";
+        }
 
 
     /**
@@ -391,15 +455,16 @@ public class ForgotPassword extends Activity
                                String userId,
                                MimeMessage emailContent)
             throws MessagingException, IOException {
+
+        Message message = createMessageWithEmail(emailContent);
         try {
-            Message message = createMessageWithEmail(emailContent);
             message = service.users().messages().send(userId, message).execute();
             return message;
         }
         catch (UserRecoverableAuthIOException e){
             startActivityForResult(e.getIntent(),REQUEST_AUTHORIZATION);
         }
-        return null;
+        return message;
 
     }
 }

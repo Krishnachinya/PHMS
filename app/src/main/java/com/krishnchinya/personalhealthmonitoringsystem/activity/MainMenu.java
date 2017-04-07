@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.krishnchinya.personalhealthmonitoringsystem.R;
+import com.krishnchinya.personalhealthmonitoringsystem.fragments.MainMenu_Diet;
 import com.krishnchinya.personalhealthmonitoringsystem.fragments.MainMenu_Home;
 import com.krishnchinya.personalhealthmonitoringsystem.fragments.MainMenu_Medication;
 import com.krishnchinya.personalhealthmonitoringsystem.fragments.MainMenu_Notes;
@@ -96,18 +97,6 @@ public class MainMenu extends AppCompatActivity {
         log_name.setText(globalVars.getUsername());
         log_email.setText(globalVars.getMailid());
 
-//        Glide.with(this).load(R.drawable.profile)
-//                .crossFade()
-//                .thumbnail(0.5f)
-//                .bitmapTransform(new CircleImage(this))
-//                .diskCacheStrategy(DiskCacheStrategy.ALL)
-//                .into(((ImageView) view.findViewById(R.id.img_profile)));
-
-//        Glide.with(this).load(R.drawable.side_nav_bar_3)
-//                .crossFade()
-//                .diskCacheStrategy(DiskCacheStrategy.ALL)
-//                .into(((ImageView) view.findViewById(R.id.img_header_bg)));
-
     }
 
     private void navigationView(){
@@ -132,6 +121,10 @@ public class MainMenu extends AppCompatActivity {
                     case R.id.nav_notes:
                         navItemIndex = 3;
                         CURRENT_TAG = "notes";
+                        break;
+                    case R.id.nav_diet:
+                        navItemIndex = 4;
+                        CURRENT_TAG = "diet";
                         break;
                     case R.id.nav_updateprofile:
                         // launch new intent instead of loading fragment
@@ -237,6 +230,8 @@ public class MainMenu extends AppCompatActivity {
                 return new MainMenu_Medication();
             case 3:
                 return new MainMenu_Notes();
+            case 4:
+                return new MainMenu_Diet();
             default:
                 return new MainMenu_Home();
         }

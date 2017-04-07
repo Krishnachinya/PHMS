@@ -21,6 +21,10 @@
             android:icon="@drawable/notes"
             android:title="@string/nav_notes" />
         <item
+            android:id="@+id/nav_diet"
+            android:icon="@drawable/vital_signs"
+            android:title="@string/nav_diet" />
+        <item
             android:id="@+id/nav_updateprofile"
             android:icon="@drawable/setting"
             android:title="@string/nav_updateprofile"/>

@@ -28,6 +28,7 @@
     <string name="nav_medication">Medication Details</string>
     <string name="nav_notifications">Notifications</string>
     <string name="nav_notes">Notes</string>
+    <string name="nav_diet">Diet</string>
     <string name="nav_updateprofile">Update Profile</string>
     <string name="nav_settings">Settings</string>
     <string name="nav_logout">Logout</string>
@@ -53,4 +54,52 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="remainder_items">
+    <item>Once a Day</item>
+    <item>Twice a Day</item>
+    <item>3 Times a Day</item>
+    <item>4 Times a Day</item>
+    </string-array>
+
+    <string-array name="medicineType">
+        <item>Capsule</item>
+        <item>Tablet</item>
+        <item>Syrup</item>
+    </string-array>
+
+    <string-array name="blood_types">
+        <item>Select Blood Group</item>
+        <item>O+</item>
+        <item>O-</item>
+        <item>A</item>
+        <item>A-</item>
+        <item>B+</item>
+        <item>B-</item>
+        <item>AB+</item>
+        <item>AB-</item>
+    </string-array>
+
+    <string name="blood_prompt">Blood Group</string>
+
+
+    <string-array name="Cholestrol_level">
+        <item>Blood Cholestrol Level</item>
+        <item>Good</item>
+        <item>Borderline</item>
+        <item>High</item>
+        <item>Low</item>
+    </string-array>
+
+
+    <string-array name="pressure_level">
+        <item>Blood Pressure Level</item>
+        <item>Low blood pressure</item>
+        <item>Normal</item>
+        <item>Prehypertension</item>
+        <item>High Blood Pressure (HP stage 1)</item>
+        <item>High Blood Pressure (HP stage 2)</item>
+        <item>High Blood Pressure Crisis</item>
+    </string-array>
+
 </resources>

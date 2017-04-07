@@ -104,6 +104,7 @@ public class UpdateRegistration extends Activity{
         etWeight.setText(details[4]);
         etHeight.setText(details[5]);
         etPhone.setText("1234567890");
+        btnMale.setChecked(true);
 
         input_etFirstName = (TextInputLayout) findViewById(R.id.input_etUpdateFirstName);
         input_etLastName= (TextInputLayout) findViewById(R.id.input_etUpdateLastName);
@@ -138,9 +139,6 @@ public class UpdateRegistration extends Activity{
 //                {
 //                    return;
 //                }
-
-
-
 
                 DB_Setter_Getter dbSetterGetter = new DB_Setter_Getter(etFirstName.getText().toString(),
                         etLastName.getText().toString(),dob.getText().toString(),"Male",

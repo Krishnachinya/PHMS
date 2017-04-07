@@ -18,7 +18,7 @@ import com.krishnchinya.personalhealthmonitoringsystem.other.GlobalVars;
 
 public class Login_Activity extends Activity {
     private TextInputLayout usernameInputLayout, passwordInputLayout;
-    private Button loginButton, newUser;
+    private Button loginButton, newUser, forgotPass;
     private EditText usernameEditText, passwordEditText;
     myTextWatcher watcher1, watcher2;
     GlobalVars globalVars;
@@ -39,6 +39,7 @@ public class Login_Activity extends Activity {
 
         loginButton = (Button) findViewById(R.id.login);
         newUser = (Button) findViewById(R.id.NewUser);
+        forgotPass = (Button) findViewById(R.id.forgotPass);
 
         watcher1 = new myTextWatcher(usernameEditText,usernameInputLayout, Login_Activity.this);
         watcher2 = new myTextWatcher(passwordEditText,passwordInputLayout,Login_Activity.this);
@@ -84,13 +85,22 @@ public class Login_Activity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Login_Activity.this ,Registration.class);
-                startActivity(intent);
+                startActivityForResult(intent,1);
+            }
+        });
+
+        forgotPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Login_Activity.this, ForgotPassword.class);
+                startActivityForResult(intent,1);
             }
         });
 
 
-
     }
+
+
 
 
 }
