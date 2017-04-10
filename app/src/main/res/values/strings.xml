@@ -56,10 +56,10 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string-array name="remainder_items">
-    <item>Once a Day</item>
-    <item>Twice a Day</item>
-    <item>3 Times a Day</item>
-    <item>4 Times a Day</item>
+        <item>Once a Day</item>
+        <item>Twice a Day</item>
+        <item>3 Times a Day</item>
+        <item>4 Times a Day</item>
     </string-array>
 
     <string-array name="medicineType">
