@@ -35,6 +35,12 @@ public class DB_Setter_Getter {
     private String bmi;
     private String bodytemp;
 
+    private String ID;
+    private String notename;
+    private String description;
+    private String datetime;
+
+
     //for Vital Signs
     public DB_Setter_Getter(String mailId, String spbloodtype,String spcholesterol,String spbp, String haemoglobin, String glucose,String heartrate,String bmi,String bodytemp,int dummy)
     {
@@ -62,6 +68,18 @@ public class DB_Setter_Getter {
         this.medicineType = medicineType;
         this.doctorName = doctorName;
         this.time = time;
+    }
+
+
+    //for Notes
+    public  DB_Setter_Getter(String ID,String mailId, String notename, String description, String datetime)
+    {
+        this.ID = ID;
+        this.mailID = mailId;
+        this.notename = notename;
+        this.description = description;
+        this.datetime = datetime;
+
     }
 
 
@@ -325,4 +343,37 @@ public class DB_Setter_Getter {
     public void setBodytemp(String bodytemp) {
         this.bodytemp = bodytemp;
     }
+
+    public String getID() {
+        return ID;
+    }
+
+    public void setID(String ID) {
+        this.ID = ID;
+    }
+
+    public String getNotename() {
+        return notename;
+    }
+
+    public void setNotename(String notename) {
+        this.notename = notename;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getDatetime() {
+        return datetime;
+    }
+
+    public void setDatetime(String datetime) {
+        this.datetime = datetime;
+    }
+
 }

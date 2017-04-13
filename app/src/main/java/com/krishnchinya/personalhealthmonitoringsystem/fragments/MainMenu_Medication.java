@@ -29,9 +29,11 @@ import com.krishnchinya.personalhealthmonitoringsystem.R;
 import com.krishnchinya.personalhealthmonitoringsystem.activity.Addmedication;
 import com.krishnchinya.personalhealthmonitoringsystem.activity.DB_Handler;
 import com.krishnchinya.personalhealthmonitoringsystem.activity.MainMenu;
+import com.krishnchinya.personalhealthmonitoringsystem.activity.Medication_Confirmation;
 import com.krishnchinya.personalhealthmonitoringsystem.activity.Registration;
 import com.krishnchinya.personalhealthmonitoringsystem.other.GlobalVars;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 
@@ -44,6 +46,11 @@ public class MainMenu_Medication extends Fragment {
     LinearLayout morning,afternoon,evening,night;
     ImageView morningimag;
     GlobalVars globalVars;
+    CardView cvmorning,cvafternoon,cvevening,cvnight;
+    ArrayList<String> almor = new ArrayList<>();
+    ArrayList<String> alaft = new ArrayList<>();
+    ArrayList<String> aleve = new ArrayList<>();
+    ArrayList<String> alnight = new ArrayList<>();
 
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -55,6 +62,11 @@ public class MainMenu_Medication extends Fragment {
         evening = (LinearLayout) view.findViewById(R.id.evening);
         night = (LinearLayout) view.findViewById(R.id.night);
        // morningimag = (ImageView) view.findViewById(R.id.morningimag);
+
+        cvmorning = (CardView) view.findViewById(R.id.cvmorning);
+        cvafternoon = (CardView) view.findViewById(R.id.cvafternoon);
+        cvevening = (CardView) view.findViewById(R.id.cvevening);
+        cvnight = (CardView) view.findViewById(R.id.cvnight);
 
         medicationdate.setInputType(InputType.TYPE_NULL);
 
@@ -114,16 +126,67 @@ public class MainMenu_Medication extends Fragment {
 
         loadMedicines(morning,afternoon,evening,night);
 
+
+        cvmorning.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), Medication_Confirmation.class);
+                Bundle bundle = new Bundle();
+                bundle.putStringArrayList("Meddetails",almor);
+                intent.putExtras(bundle);
+                startActivityForResult(intent,1);
+
+            }
+        });
+
+
+        cvafternoon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), Medication_Confirmation.class);
+                Bundle bundle = new Bundle();
+                bundle.putStringArrayList("Meddetails",alaft);
+                intent.putExtras(bundle);
+                startActivityForResult(intent,1);
+            }
+        });
+
+        cvevening.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), Medication_Confirmation.class);
+                Bundle bundle = new Bundle();
+                bundle.putStringArrayList("Meddetails",aleve);
+                intent.putExtras(bundle);
+                startActivityForResult(intent,1);
+            }
+        });
+
+        cvnight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), Medication_Confirmation.class);
+                Bundle bundle = new Bundle();
+                bundle.putStringArrayList("Meddetails",alnight);
+                intent.putExtras(bundle);
+                startActivityForResult(intent,1);
+            }
+        });
+
+
         return view;
     }
 
     public void loadMedicines(LinearLayout morning, LinearLayout afternoon, LinearLayout evening, LinearLayout night)
     {
-
         morning.removeAllViews();
         afternoon.removeAllViews();
         evening.removeAllViews();
         night.removeAllViews();
+        almor.removeAll(almor);
+        alaft.removeAll(alaft);
+        aleve.removeAll(aleve);
+        alnight.removeAll(alnight);
 
         DB_Handler db_handler = new DB_Handler(getContext());
 
@@ -140,17 +203,32 @@ public class MainMenu_Medication extends Fragment {
 
             if(Integer.parseInt(Spilt[0]) > 5 && Integer.parseInt(Spilt[0]) <= 12)
             {
+                almor.add(medicineName);
+                almor.add(medicineType);
+                almor.add(time);
+                almor.add(globalVars.getMailid());
                 medicinesToView(morning, medicineType);
 
             }else if(Integer.parseInt(Spilt[0]) > 12 && Integer.parseInt(Spilt[0]) <= 17)
              {
+                 alaft.add(medicineName);
+                 alaft.add(medicineType);
+                 alaft.add(time);
+                 alaft.add(globalVars.getMailid());
             medicinesToView(afternoon,medicineType);
 
             }else if(Integer.parseInt(Spilt[0]) > 17 && Integer.parseInt(Spilt[0]) <= 21)
             {
+                aleve.add(medicineName);
+                aleve.add(medicineType);
+                aleve.add(time);
+                aleve.add(globalVars.getMailid());
             medicinesToView(evening,medicineType);
-
             }else{
+                alnight.add(medicineName);
+                alnight.add(medicineType);
+                alnight.add(time);
+                alnight.add(globalVars.getMailid());
             medicinesToView(night,medicineType);
             }
         }
@@ -163,9 +241,12 @@ public class MainMenu_Medication extends Fragment {
         params.topMargin = 20;
         params.leftMargin = 20;
         imageView.setLayoutParams(params);
-        if(medicinetype == "Capsule") {
+        if(medicinetype.equals("Capsule")) {
             imageView.setImageResource(R.drawable.capsule1);
-        }else if(medicinetype == "Tablet"){
+        }else if(medicinetype.equals("Tablet")){
+            params.topMargin = 10;
+            params.leftMargin = 10;
+            imageView.setLayoutParams(params);
         imageView.setImageResource(R.drawable.tablet);
         }else {
             imageView.setImageResource(R.drawable.capsule1);

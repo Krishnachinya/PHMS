@@ -25,39 +25,6 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true" />
 
-    <Button
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content" android:text="@string/btn_login"
-        android:id="@+id/login"
-        android:layout_below="@+id/input_password"
-        android:layout_centerHorizontal="true" />
-
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/input_username"
-        android:layout_below="@+id/logo"
-        android:layout_alignParentStart="true">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="24dp" android:src="@drawable/user" android:layout_marginTop="10dp"/>
-
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/userName"
-            android:hint="@string/user_name" android:layout_marginLeft="30dp" />
-
-        </RelativeLayout>
-    </android.support.design.widget.TextInputLayout>
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -101,6 +68,39 @@
 
         </RelativeLayout>
     </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/input_username"
+        android:layout_below="@+id/logo"
+        android:layout_alignParentStart="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="24dp" android:src="@drawable/user" android:layout_marginTop="10dp"/>
+
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/userName"
+            android:hint="@string/user_name" android:layout_marginLeft="30dp" />
+
+        </RelativeLayout>
+    </android.support.design.widget.TextInputLayout>
+
+    <Button
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content" android:text="@string/btn_login"
+        android:id="@+id/login"
+        android:layout_below="@+id/input_password"
+        android:layout_centerHorizontal="true" />
 
     <!--
         <TextView

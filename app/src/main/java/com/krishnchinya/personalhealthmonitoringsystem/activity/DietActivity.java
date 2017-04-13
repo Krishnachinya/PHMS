@@ -159,7 +159,10 @@ public class DietActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
 
-                double bfc = Double.parseDouble(bfCal.getText().toString());
+                if(bfCal.getText().toString().isEmpty())
+                {
+                    bfc = 0;
+                }else{bfc = Double.parseDouble(bfCal.getText().toString());}
 
                 double totalCal=bfc+lnc+dnc+snc;
                 TotalCal.setText(String.valueOf(totalCal));
@@ -180,8 +183,15 @@ public class DietActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                double bfc = Double.parseDouble(bfCal.getText().toString());
-                double lnc = Double.parseDouble(lunchCal.getText().toString());
+                if(bfCal.getText().toString().isEmpty())
+                {
+                    bfc = 0;
+                }else{bfc = Double.parseDouble(bfCal.getText().toString());}
+
+                if(lunchCal.getText().toString().isEmpty()){
+                    lnc=0;
+                }else {lnc = Double.parseDouble(lunchCal.getText().toString());}
+
 
                 double totalCal=bfc+lnc+dnc+snc;
                 TotalCal.setText(String.valueOf(totalCal));
@@ -201,9 +211,21 @@ public class DietActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                double bfc = Double.parseDouble(bfCal.getText().toString());
-                double lnc = Double.parseDouble(lunchCal.getText().toString());
-                double dnc = Double.parseDouble(dinnerCal.getText().toString());
+                if(bfCal.getText().toString().isEmpty())
+                {
+                    bfc = 0;
+                }else{bfc = Double.parseDouble(bfCal.getText().toString());}
+
+                if(lunchCal.getText().toString().isEmpty()){
+                    lnc=0;
+                }else {lnc = Double.parseDouble(lunchCal.getText().toString());}
+
+                if(dinnerCal.getText().toString().isEmpty())
+                {
+                    dnc=0;
+                }else{
+                    dnc = Double.parseDouble(dinnerCal.getText().toString());
+                }
 
 
                 double totalCal=bfc+lnc+dnc+snc;
@@ -224,10 +246,25 @@ public class DietActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                double bfc = Double.parseDouble(bfCal.getText().toString());
-                double lnc = Double.parseDouble(lunchCal.getText().toString());
-                double dnc = Double.parseDouble(dinnerCal.getText().toString());
-                double snc = Double.parseDouble(snacksCal.getText().toString());
+                if(bfCal.getText().toString().isEmpty())
+                {
+                    bfc = 0;
+                }else{bfc = Double.parseDouble(bfCal.getText().toString());}
+
+                if(lunchCal.getText().toString().isEmpty()){
+                    lnc=0;
+                }else {lnc = Double.parseDouble(lunchCal.getText().toString());}
+
+                if(dinnerCal.getText().toString().isEmpty())
+                {
+                    dnc=0;
+                }else{
+                    dnc = Double.parseDouble(dinnerCal.getText().toString());
+                }
+
+                if(snacksCal.getText().toString().isEmpty()){
+                    snc=0;
+                }else {snc = Double.parseDouble(snacksCal.getText().toString());}
 
                 double totalCal=bfc+lnc+dnc+snc;
                 TotalCal.setText(String.valueOf(totalCal));

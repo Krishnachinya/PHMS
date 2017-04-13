@@ -9,6 +9,7 @@ import android.icu.text.SimpleDateFormat;
 
 import com.krishnchinya.personalhealthmonitoringsystem.other.GlobalVars;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
@@ -20,7 +21,7 @@ public class DB_Handler extends SQLiteOpenHelper {
 
 
     // Database Version
-    private static final int DATABASE_VERSION = 6;
+    private static final int DATABASE_VERSION = 8;
     // Database Name
     private static final String DATABASE_NAME = "PHMS";
     // Contacts table name
@@ -29,6 +30,10 @@ public class DB_Handler extends SQLiteOpenHelper {
     private static final String TABLE_MEDICINE = "MEDICATION";
 
     private static final String TABLE_VITALS = "VITALS";
+
+
+    private static final String TABLE_NOTES = "NOTES";
+
 
 
     public DB_Handler(Context context) {
@@ -48,10 +53,14 @@ public class DB_Handler extends SQLiteOpenHelper {
         String CREATE_TABLE_VITALS = "create table "+ TABLE_VITALS + " (mailid TEXT, spbloodtype TEXT , spcholesterol TEXT, spbp TEXT," +
                 " glucose TEXT, heartrate TEXT, bmi TEXT, bodytemp TEXT)";
 
+        String CREATE_TABLE_NOTES = "create table "+ TABLE_NOTES + " (Id TEXT, mailid TEXT, notename TEXT , description TEXT, datetime TEXT)";
+
+
         db.execSQL(CREATE_TABLE_LOGIN);
         db.execSQL(CREATE_TABLE_REGISTRATION);
         db.execSQL(CREATE_TABLE_MEDICATION);
         db.execSQL(CREATE_TABLE_VITALS);
+        db.execSQL(CREATE_TABLE_NOTES);
     }
 
     @Override
@@ -61,6 +70,7 @@ public class DB_Handler extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_LOGIN);
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_MEDICINE);
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_VITALS);
+        db.execSQL("DROP TABLE IF EXISTS "+TABLE_NOTES);
         onCreate(db);
     }
 
@@ -303,24 +313,118 @@ public class DB_Handler extends SQLiteOpenHelper {
         db.close();
     }
 
-    public String[] getVitalDetails(String mailId)
+    public ArrayList<ArrayList<String>> getVitalDetails(String mailId)
     {
-        String[] details = new String[7];
+        ArrayList<ArrayList<String>> row = new ArrayList<ArrayList<String>>();
+        ArrayList<String> column;
+        int count=0;
+       // String[] details = new String[7];
         SQLiteDatabase db = this.getReadableDatabase();
 
-        Cursor cursor = db.query(TABLE_VITALS,new String[]{"spbloodtype","spcholesterol","spbp","glucose","heartrate","bmi","bodytemp"},"mailid = ?",
+//        Cursor cursor = db.query(TABLE_VITALS,new String[]{"spbloodtype","spcholesterol","spbp","glucose","heartrate","bmi","bodytemp"},"mailid = ?",
+//                new String[]{mailId.toLowerCase()},null,null,null);
+
+        Cursor cursor = db.query(TABLE_VITALS,new String[]{"spbloodtype","glucose","bmi","spcholesterol"},"mailid = ?",
                 new String[]{mailId.toLowerCase()},null,null,null);
 
         if(cursor!=null)
         {
-            cursor.moveToFirst();
-            for(int i=0;i<details.length;i++) {
-                details[i] = cursor.getString(i);
+            while (cursor.moveToNext())
+            {
+                column = new ArrayList<>();
+           // for(int j=0;j<cursor.getCount();j++) {
+                for (int i = 0; i < 4; i++) {
+                    column.add(cursor.getString(i));
+                }
+                //row.get(count).add(column);
+                row.add(column);
+
             }
         }
-
-        return details;
+        return row;
 
     }
+
+
+    public void addNotes(DB_Setter_Getter dbSetterGetter){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put("Id",dbSetterGetter.getID());
+        values.put("mailid", dbSetterGetter.getMailID().toLowerCase());
+        values.put("notename",dbSetterGetter.getNotename());
+        values.put("description",dbSetterGetter.getDescription());
+        values.put("datetime",dbSetterGetter.getDatetime());
+        //values.put("haemoglobin",dbSetterGetter.getHaemoglobin());
+
+        db.insert(TABLE_NOTES,null,values);
+        db.close();
+
+
+
+    }
+    public String[] getNote(DB_Setter_Getter db_setter_getter, String noteid)
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String[] details = new String[3];
+
+        Cursor cursor = db.query(TABLE_NOTES,new String[]{"notename","description", "Id"},"Id = ? AND mailid = ?",
+                new String[]{noteid, "krishna@gmail.com"},null,null,null);
+
+        cursor.moveToFirst();
+        details[0] = cursor.getString(0);
+        details[1] = cursor.getString(1);
+        details[2] = cursor.getString(2);
+
+        return details;
+    }
+
+    public ArrayList<String> getAllNotes(String mailId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        int count = 0;
+
+
+        ArrayList<String> details = new ArrayList<>();
+
+        Cursor cursor = db.query(TABLE_NOTES, new String[]{"notename", "Id"}, "mailid = ?",
+                new String[]{"krishna@gmail.com"}, null, null, null);
+
+        if (cursor != null) {
+            while (cursor.moveToNext()) {
+                //cursor.moveToFirst();
+                details.add(cursor.getString(0));
+                details.add(cursor.getString(1));
+                //count++;
+
+            }
+
+        }
+        return details;
+    }
+
+    public void updateNote(DB_Setter_Getter db_setter_getter, String noteid)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put("notename",db_setter_getter.getNotename());
+        values.put("description", db_setter_getter.getDescription());
+
+        db.update(TABLE_NOTES,values,"Id = "+noteid,null);
+        db.close();
+    }
+
+    public int getNotesCount(){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+
+        Cursor cursor = db.query(TABLE_NOTES,new String[]{"Id"},null,
+                null,null,null,null);
+
+        return cursor.getCount();
+
+    }
+
 
 }
