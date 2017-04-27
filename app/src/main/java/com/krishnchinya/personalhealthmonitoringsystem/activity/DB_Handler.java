@@ -28,12 +28,9 @@ public class DB_Handler extends SQLiteOpenHelper {
     private static final String TABLE_REGISTRATION = "REGISTRATION";
     private static final String TABLE_LOGIN = "LOGIN";
     private static final String TABLE_MEDICINE = "MEDICATION";
-
     private static final String TABLE_VITALS = "VITALS";
-
-
     private static final String TABLE_NOTES = "NOTES";
-
+    private static final String TABLE_CALORIES = "CALORIES";
 
 
     public DB_Handler(Context context) {
@@ -55,12 +52,15 @@ public class DB_Handler extends SQLiteOpenHelper {
 
         String CREATE_TABLE_NOTES = "create table "+ TABLE_NOTES + " (Id TEXT, mailid TEXT, notename TEXT , description TEXT, datetime TEXT)";
 
+        String CREATE_TABLE_CALORIES = "create table "+ TABLE_CALORIES + " (mailId TEXT, Date TEXT, itemName TEXT,nfCalories TEXT," +
+                "nf_total_fat TEXT, nf_cholesterol TEXT,nf_total_carbohydrate TEXT, nf_serving_size_qty TEXT)";
 
         db.execSQL(CREATE_TABLE_LOGIN);
         db.execSQL(CREATE_TABLE_REGISTRATION);
         db.execSQL(CREATE_TABLE_MEDICATION);
         db.execSQL(CREATE_TABLE_VITALS);
         db.execSQL(CREATE_TABLE_NOTES);
+        db.execSQL(CREATE_TABLE_CALORIES);
     }
 
     @Override
@@ -71,6 +71,7 @@ public class DB_Handler extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_MEDICINE);
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_VITALS);
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_NOTES);
+        db.execSQL("DROP TABLE IF EXISTS "+TABLE_CALORIES);
         onCreate(db);
     }
 
@@ -355,6 +356,9 @@ public class DB_Handler extends SQLiteOpenHelper {
         values.put("notename",dbSetterGetter.getNotename());
         values.put("description",dbSetterGetter.getDescription());
         values.put("datetime",dbSetterGetter.getDatetime());
+        values.put("bytesarray", dbSetterGetter.getBytesarray());
+        // values.put();
+
         //values.put("haemoglobin",dbSetterGetter.getHaemoglobin());
 
         db.insert(TABLE_NOTES,null,values);
@@ -369,16 +373,38 @@ public class DB_Handler extends SQLiteOpenHelper {
 
         String[] details = new String[3];
 
-        Cursor cursor = db.query(TABLE_NOTES,new String[]{"notename","description", "Id"},"Id = ? AND mailid = ?",
+        Cursor cursor = db.query(TABLE_NOTES,new String[]{"notename","description","bytesarray", "Id"},"Id = ? AND mailid = ?",
                 new String[]{noteid, "krishna@gmail.com"},null,null,null);
 
         cursor.moveToFirst();
         details[0] = cursor.getString(0);
         details[1] = cursor.getString(1);
         details[2] = cursor.getString(2);
+        details[3] = cursor.getString(3);
 
         return details;
     }
+
+
+
+
+
+//    public String[] getNote(DB_Setter_Getter db_setter_getter, String noteid)
+//    {
+//        SQLiteDatabase db = this.getReadableDatabase();
+//
+//        String[] details = new String[3];
+//
+//        Cursor cursor = db.query(TABLE_NOTES,new String[]{"notename","description", "Id"},"Id = ? AND mailid = ?",
+//                new String[]{noteid, "krishna@gmail.com"},null,null,null);
+//
+//        cursor.moveToFirst();
+//        details[0] = cursor.getString(0);
+//        details[1] = cursor.getString(1);
+//        details[2] = cursor.getString(2);
+//
+//        return details;
+//    }
 
     public ArrayList<String> getAllNotes(String mailId) {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -424,6 +450,30 @@ public class DB_Handler extends SQLiteOpenHelper {
 
         return cursor.getCount();
 
+    }
+
+    public void addCalories(DB_Setter_Getter dbSetterGetter)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put("mailId",dbSetterGetter.getMailId());
+        values.put("Date", dbSetterGetter.getAddedDate());
+        values.put("itemName",dbSetterGetter.getItemName());
+        values.put("nfCalories", dbSetterGetter.getNfCalories());
+        values.put("nf_total_fat",dbSetterGetter.getNf_total_fat());
+        values.put("nf_cholesterol", dbSetterGetter.getNf_cholesterol());
+        values.put("nf_total_carbohydrate",dbSetterGetter.getNf_total_carbohydrate());
+        values.put("nf_serving_size_qty", dbSetterGetter.getNf_serving_size_qty());
+
+        db.insert(TABLE_CALORIES,null,values);
+        db.close();
+    }
+
+    public void delete(int noteid) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_NOTES,"Id=?",new String[]{String.valueOf(noteid)});
+        db.close();
     }
 
 

@@ -236,6 +236,7 @@ public class Registration extends Activity
 
                     };
 
+
                     send.execute(etEmail.getText().toString());
                     db_handler.SetNewPassword(dbSetterGetter);
 

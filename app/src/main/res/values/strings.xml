@@ -101,5 +101,6 @@
         <item>High Blood Pressure (HP stage 2)</item>
         <item>High Blood Pressure Crisis</item>
     </string-array>
+    <string name="title_activity_test">Test</string>
 
 </resources>

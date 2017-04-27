@@ -30,6 +30,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_below="@+id/login"
+        android:id="@+id/rlfglayout"
         android:layout_alignParentStart="true">
         <Button
             android:layout_width="160dp" style="@style/Widget.AppCompat.Button.Borderless.Colored"
@@ -85,11 +86,13 @@
                 android:layout_height="24dp" android:src="@drawable/user" android:layout_marginTop="10dp"/>
 
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/userName"
-            android:hint="@string/user_name" android:layout_marginLeft="30dp" />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/userName"
+                android:hint="@string/user_name" android:layout_marginLeft="30dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true" />
 
         </RelativeLayout>
     </android.support.design.widget.TextInputLayout>
@@ -102,82 +105,44 @@
         android:layout_below="@+id/input_password"
         android:layout_centerHorizontal="true" />
 
-    <!--
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rlfglayout"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_action_fingerprint"
+            android:id="@+id/icon"
+            android:paddingTop="2dp"
+            android:layout_marginBottom="15dp"
+            />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Username:"
-            android:id="@+id/editText2" android:enabled="false"
-            android:inputType="none"
-            android:layout_below="@+id/logo"
-            android:layout_above="@+id/editText"
-            android:layout_toStartOf="@+id/userName"
-            android:textSize="20dp" />
-
-
-        <EditText
-            android:layout_width="300dp"
-            android:layout_height="wrap_content" android:inputType="textEmailAddress" android:id="@+id/userName"
-            android:layout_alignParentEnd="true"
-            android:layout_toEndOf="@+id/editText" android:layout_below="@id/logo" />
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:text="Password:"
-            android:layout_alignBaseline="@+id/password"
-            android:layout_alignBottom="@+id/password"
-            android:id="@+id/editText" android:enabled="false"
-            android:layout_alignParentStart="true" />
-
-        <EditText
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:ems="10"
-            android:id="@+id/password"
-            android:layout_alignParentEnd="true"
-            android:layout_below="@+id/userName"
-            android:layout_toEndOf="@+id/editText" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:text="Login"
-            android:id="@+id/login"
-            android:layout_below="@+id/password"
-            android:layout_centerHorizontal="true" />
-
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/forgotPassword"
-            android:linksClickable="true" android:text="Forgot Password"
-            android:layout_marginEnd="31dp"
-            android:layout_below="@+id/login" android:enabled="false"
-            android:layout_alignParentEnd="true" />
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:text="New User"
-            android:linksClickable="true" android:id="@+id/newUserReg"
-            android:textColorLink="@color/colorAccent"
-            android:layout_marginEnd="13dp"
-            android:layout_below="@+id/login" android:enabled="false"
-            android:layout_toStartOf="@+id/forgotPassword" />
-
-        <Button
-            android:id="@+id/dummy_button"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:textSize="16sp"
+            android:text="One-touch Sign In"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="2dp"/>
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="match_parent" android:id="@+id/loginFullScreen"
-            android:gravity="center"
-            android:keepScreenOn="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true" />
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/holo_red_dark"
+            android:textSize="14sp"
+            android:textAlignment="center"
+            android:id="@+id/errorText"
+            android:paddingEnd="30dp"
+            android:paddingStart="30dp"
+            android:gravity="center"/>
 
-            -->
+    </LinearLayout>
+
 
 </RelativeLayout>

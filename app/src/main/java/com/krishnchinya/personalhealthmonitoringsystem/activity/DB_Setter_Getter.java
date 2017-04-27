@@ -39,7 +39,34 @@ public class DB_Setter_Getter {
     private String notename;
     private String description;
     private String datetime;
+    private byte[] bytesarray;
 
+    public byte[] getBytesarray() {
+        return bytesarray;
+    }
+
+    public void setBytesarray(byte[] bytesarray) {
+        this.bytesarray = bytesarray;
+    }
+
+    private String addedDate;
+    private String itemName;
+    private String nfCalories;
+    private String nf_total_fat;
+    private String nf_cholesterol;
+    private String nf_total_carbohydrate;
+    private String nf_serving_size_qty;
+
+    public DB_Setter_Getter(String mailId,String date, String itemName, String nfCalories, String nf_total_fat, String nf_cholesterol, String nf_total_carbohydrate, String nf_serving_size_qty,double a) {
+        this.mailId = mailId;
+        addedDate = date;
+        this.itemName = itemName;
+        this.nfCalories = nfCalories;
+        this.nf_total_fat = nf_total_fat;
+        this.nf_cholesterol = nf_cholesterol;
+        this.nf_total_carbohydrate = nf_total_carbohydrate;
+        this.nf_serving_size_qty = nf_serving_size_qty;
+    }
 
     //for Vital Signs
     public DB_Setter_Getter(String mailId, String spbloodtype,String spcholesterol,String spbp, String haemoglobin, String glucose,String heartrate,String bmi,String bodytemp,int dummy)
@@ -72,15 +99,17 @@ public class DB_Setter_Getter {
 
 
     //for Notes
-    public  DB_Setter_Getter(String ID,String mailId, String notename, String description, String datetime)
+    public  DB_Setter_Getter(String ID, String mailId, String notename, String description, String datetime,byte[] bytesarray)
     {
         this.ID = ID;
         this.mailID = mailId;
         this.notename = notename;
         this.description = description;
         this.datetime = datetime;
+        this.bytesarray=bytesarray;
 
     }
+
 
 
 
@@ -376,4 +405,59 @@ public class DB_Setter_Getter {
         this.datetime = datetime;
     }
 
+    public String getAddedDate() {
+        return addedDate;
+    }
+
+    public void setAddedDate(String addedDate) {
+        this.addedDate = addedDate;
+    }
+
+    public String getItemName() {
+        return itemName;
+    }
+
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
+    }
+
+    public String getNfCalories() {
+        return nfCalories;
+    }
+
+    public void setNfCalories(String nfCalories) {
+        this.nfCalories = nfCalories;
+    }
+
+    public String getNf_total_fat() {
+        return nf_total_fat;
+    }
+
+    public void setNf_total_fat(String nf_total_fat) {
+        this.nf_total_fat = nf_total_fat;
+    }
+
+    public String getNf_cholesterol() {
+        return nf_cholesterol;
+    }
+
+    public void setNf_cholesterol(String nf_cholesterol) {
+        this.nf_cholesterol = nf_cholesterol;
+    }
+
+    public String getNf_total_carbohydrate() {
+        return nf_total_carbohydrate;
+    }
+
+    public void setNf_total_carbohydrate(String nf_total_carbohydrate) {
+        this.nf_total_carbohydrate = nf_total_carbohydrate;
+    }
+
+    public String getNf_serving_size_qty() {
+        return nf_serving_size_qty;
+    }
+
+    public void setNf_serving_size_qty(String nf_serving_size_qty) {
+        this.nf_serving_size_qty = nf_serving_size_qty;
+    }
 }

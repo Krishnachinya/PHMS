@@ -133,8 +133,9 @@ public class MainMenu extends AppCompatActivity {
                         drawerLayout.closeDrawers();
                         return true;
                     case R.id.nav_logout:
-                        intent = new Intent();
-                        setResult(Activity.RESULT_CANCELED,intent);
+                        intent = new Intent(MainMenu.this,Login_Activity.class);
+                        startActivity(intent);
+                        //setResult(Activity.RESULT_CANCELED,intent);
                         finish();
                         return true;
                     //insert cases for others

@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import com.krishnchinya.personalhealthmonitoringsystem.R;
 import com.krishnchinya.personalhealthmonitoringsystem.activity.DietActivity;
+import com.krishnchinya.personalhealthmonitoringsystem.activity.DietSearch;
 import com.krishnchinya.personalhealthmonitoringsystem.activity.VitalSigns;
 
 
@@ -26,7 +27,7 @@ public class MainMenu_Diet extends Fragment {
         addDiet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(),DietActivity.class);
+                Intent intent = new Intent(getActivity(),DietSearch.class);
                 startActivityForResult(intent,1);
             }
         });

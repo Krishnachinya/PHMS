@@ -19,6 +19,8 @@ import java.util.ArrayList;
 
 public class Medication_Confirmation extends Activity {
 
+
+
     RecyclerView recyclerView;
     myAdapter adapter;
     ArrayList<String> medDetails = new ArrayList<>();

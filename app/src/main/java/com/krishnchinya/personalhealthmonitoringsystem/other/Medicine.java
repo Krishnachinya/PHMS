@@ -1,5 +1,6 @@
 package com.krishnchinya.personalhealthmonitoringsystem.other;
 
+import com.google.api.client.util.NullValue;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
