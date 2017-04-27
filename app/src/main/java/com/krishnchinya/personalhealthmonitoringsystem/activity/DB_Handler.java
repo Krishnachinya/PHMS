@@ -21,7 +21,7 @@ public class DB_Handler extends SQLiteOpenHelper {
 
 
     // Database Version
-    private static final int DATABASE_VERSION = 8;
+    private static final int DATABASE_VERSION = 9;
     // Database Name
     private static final String DATABASE_NAME = "PHMS";
     // Contacts table name
@@ -476,5 +476,35 @@ public class DB_Handler extends SQLiteOpenHelper {
         db.close();
     }
 
+    public ArrayList<ArrayList<String>> getDietRecords(String mailId, String date){
+
+        ArrayList<ArrayList<String>> row = new ArrayList<ArrayList<String>>();
+        ArrayList<String> column;
+        int count=0;
+        // String[] details = new String[7];
+        SQLiteDatabase db = this.getReadableDatabase();
+
+//        Cursor cursor = db.query(TABLE_VITALS,new String[]{"spbloodtype","spcholesterol","spbp","glucose","heartrate","bmi","bodytemp"},"mailid = ?",
+//                new String[]{mailId.toLowerCase()},null,null,null);
+
+        Cursor cursor = db.query(TABLE_CALORIES, new String[]{"nfCalories", "nf_total_fat", "nf_cholesterol", "itemName"}, "mailId = ? AND Date = ?",
+                new String[] {mailId.toLowerCase(), date.toLowerCase()}, null, null, null);
+
+        if(cursor!=null)
+        {
+            while (cursor.moveToNext())
+            {
+                column = new ArrayList<>();
+                // for(int j=0;j<cursor.getCount();j++) {
+                for (int i = 0; i < 4; i++) {
+                    column.add(cursor.getString(i));
+                }
+                //row.get(count).add(column);
+                row.add(column);
+
+            }
+        }
+        return row;
+    }
 
 }
