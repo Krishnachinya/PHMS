@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.icu.text.SimpleDateFormat;
 import android.icu.util.Calendar;
 import android.icu.util.GregorianCalendar;
@@ -367,8 +368,13 @@ public class Addmedication extends Activity {
 
                 DB_Handler db_handler = new DB_Handler(Addmedication.this);
                 db_handler.addmedication(db_setter_getter);
-                //save thg values to db
+
+                Intent intent = new Intent(Addmedication.this, MainMenu.class);
+                //startActivityForResult(intent,1);
+                startActivity(intent);
                 finish();
+
+
             }
 
             public void alertwindow(String message)

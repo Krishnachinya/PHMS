@@ -50,7 +50,9 @@ public class MainMenu_Vitals extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(),VitalSigns.class);
-                startActivityForResult(intent,1);
+                //startActivityForResult(intent,1);
+                startActivity(intent);
+                getActivity().finish();
             }
         });
 

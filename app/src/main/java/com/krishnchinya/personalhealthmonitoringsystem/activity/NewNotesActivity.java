@@ -1,8 +1,13 @@
 package com.krishnchinya.personalhealthmonitoringsystem.activity;
 
 import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -14,7 +19,9 @@ import android.widget.Toast;
 
 
 import com.krishnchinya.personalhealthmonitoringsystem.R;
+import com.krishnchinya.personalhealthmonitoringsystem.fragments.MainMenu_Notes;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -54,7 +61,7 @@ public class NewNotesActivity extends AppCompatActivity {
         cameraButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent("MediaStore.ACTION_IMAGE_CAPTURE");
+                Intent intent=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 if (intent.resolveActivity(getPackageManager())!= null){
                     startActivityForResult(intent, REQUEST_CODE);
                 }
@@ -69,6 +76,12 @@ public class NewNotesActivity extends AppCompatActivity {
             notedetails = db_handler.getNote(db_setter_getter, noteid);
             title.setText(notedetails[0]);
             description.setText(notedetails[1]);
+
+            imageByte = db_handler.getNoteImage(db_setter_getter, noteid);
+            //bitmap = Drawable.createFromStream(new ByteArrayInputStream(imageByte),null)
+            if(imageByte != null) {
+                notesImage.setImageBitmap(BitmapFactory.decodeByteArray(imageByte, 0, imageByte.length));
+            }
         }else
         {
 
@@ -101,7 +114,11 @@ public class NewNotesActivity extends AppCompatActivity {
 
             //save to db
             db_handler.addNotes(db_setter_getter);
+            Intent intent = new Intent(NewNotesActivity.this, MainMenu.class);
+                     //startActivityForResult(intent,1);
+            startActivity(intent);
             finish();
+
 
         }
         else {

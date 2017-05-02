@@ -1,5 +1,7 @@
 package com.krishnchinya.personalhealthmonitoringsystem.fragments;
 
+import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -41,9 +43,13 @@ public class MainMenu_Notes extends Fragment  {
     private DB_Handler db_handler;
 
 
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_main_menu_notes, container, false);
+
+
 
 
         notesRecyclerView = (RecyclerView) view.findViewById(R.id.notes_recycler_view);
@@ -57,7 +63,7 @@ public class MainMenu_Notes extends Fragment  {
 
         ArrayList<String> details = db_handler.getAllNotes("krishna@gmail.com");
 
-        myNotesAdapter adapter = new myNotesAdapter(details);
+        myNotesAdapter adapter = new myNotesAdapter(details,getActivity());
         notesRecyclerView.setAdapter(adapter);
 
 
@@ -67,7 +73,9 @@ public class MainMenu_Notes extends Fragment  {
             public void onClick(View v){
                 Intent intent = new Intent(getContext(), NewNotesActivity.class);
                 intent.putExtra("caller", "newNote");
-                startActivityForResult(intent,1);
+                startActivity(intent);
+
+                //startActivityForResult(intent,1);
             }
 
         });
@@ -86,15 +94,17 @@ public class MainMenu_Notes extends Fragment  {
 
 class myNotesAdapter extends RecyclerView.Adapter<notesViewholder>
 {
+    Activity activity;
     private ArrayList<String> myData;
     private String[] Id;
     int count=0;
     DB_Handler db_handler;
     Drawable draw;
 
-    public myNotesAdapter(ArrayList<String> mData){
+    public myNotesAdapter(ArrayList<String> mData,Activity context){
         myData=mData;
        // this.Id = Id;
+        this.activity = context;
     }
 
     @Override
@@ -123,20 +133,27 @@ class myNotesAdapter extends RecyclerView.Adapter<notesViewholder>
 
         holder.notesName.setOnLongClickListener(new View.OnLongClickListener(){
 
-
-
-
             @Override
             public boolean onLongClick(View v) {
                 db_handler = new DB_Handler(v.getContext());
                 AlertDialog.Builder ad= new AlertDialog.Builder(v.getContext());
                 ad.setTitle("Delete");
                 ad.setMessage("Do you want to delete the note?");
-                final int pos=holder.getAdapterPosition();
+                final int id= Integer.parseInt(holder.noteid.getText().toString());
                 ad.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        db_handler.delete(pos);
+                        db_handler.delete(id);
+
+                        activity.finish();
+//                        Fragment fragment = new MainMenu_Notes();
+//                        FragmentTransaction fragmentTransaction = activity.getFragmentManager().beginTransaction();
+//                        //fragmentTransaction.setCustomAnimations(FragmentTransaction.TRANSIT_FRAGMENT_OPEN,
+//                        // FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
+//                        fragmentTransaction.replace(R.id.frame,fragment,"notes");
+//                        fragmentTransaction.commitAllowingStateLoss();
+
+                        activity.startActivity(activity.getIntent());
                     }
                 });
 

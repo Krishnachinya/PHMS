@@ -3,6 +3,7 @@ package com.krishnchinya.personalhealthmonitoringsystem.activity;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -409,8 +410,12 @@ public class VitalSigns extends Activity {
 
                 DB_Handler db_handler = new DB_Handler(VitalSigns.this);
                 db_handler.addvitalSigns(db_setter_getter);
-                //save thg values to db
+
+                Intent intent = new Intent(VitalSigns.this, MainMenu.class);
+                //startActivityForResult(intent,1);
+                startActivity(intent);
                 finish();
+
 
             }
 

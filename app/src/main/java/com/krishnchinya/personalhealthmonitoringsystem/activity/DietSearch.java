@@ -1,6 +1,8 @@
 package com.krishnchinya.personalhealthmonitoringsystem.activity;
 
 import android.app.Activity;
+import android.app.IntentService;
+import android.content.Intent;
 import android.icu.text.SimpleDateFormat;
 import android.icu.util.Calendar;
 import android.os.Bundle;
@@ -147,10 +149,11 @@ public class DietSearch extends Activity {
                             Calendar calendar = Calendar.getInstance();
                             SimpleDateFormat mdformat = new SimpleDateFormat("yyyy/MM/dd");
                             String strDate = mdformat.format(calendar.getTime());
+                            Double notApplicable = 0.0;
 
-                            db_setter_getter = new DB_Setter_Getter("krishna@gmail.com",strDate,fooddetails.itemName,
+                            db_setter_getter = new DB_Setter_Getter("krishna@gmail.com", "abc",fooddetails.itemName.toString(),
                                     fooddetails.nfCalories.toString(),fooddetails.nfTotalFat.toString(),fooddetails.nfCholesterol.toString(),
-                                    fooddetails.nfTotalCarbohydrate.toString(),fooddetails.nfServingSizeQty.toString());
+                                    fooddetails.nfTotalCarbohydrate.toString(),fooddetails.nfServingSizeQty.toString(), notApplicable);
 
                         }
 
@@ -167,8 +170,10 @@ public class DietSearch extends Activity {
             @Override
             public void onClick(View v) {
                 DB_Handler db_handler = new DB_Handler(DietSearch.this);
-
                 db_handler.addCalories(db_setter_getter);
+                Intent intent = new Intent(DietSearch.this,MainMenu.class);
+                startActivity(intent);
+                finish();
 
             }
         });
